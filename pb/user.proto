@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package user;
+
+option go_package = "/;pb";
+
+message User {
+  int32 id = 1;
+  string fname = 2;
+  string city = 3;
+  int64 phone = 4;
+  float height = 5;
+  bool married = 6;
+}
+
+message UserID {
+  int32 id = 1;
+}
+
+message UserIDs {
+  repeated int32 ids = 1;
+}
+
+message SearchCriteria {
+  string city = 1;
+  int64 phone = 2;
+  oneof married_criteria {
+    bool married = 3;
+  }
+}
+
+message Users {
+  repeated User users = 1;
+}
+
+service UserService {
+  rpc GetUser(UserID) returns (User);
+  rpc GetUsers(UserIDs) returns (Users);
+  rpc SearchUsers(SearchCriteria) returns (Users);
+}
